@@ -5,11 +5,14 @@ public/assets/mix.js.map
 public/assets/mix-manifest.json
 
 build/deploy/
+build/trunk/
 vendor/
-composer.lock
 auth.json
+app.zip
+build.zip
 
 public/wp/uploads/*
+!public/.htaccess
 !public/wp/uploads/.gitkeep
 
 public/wp/*

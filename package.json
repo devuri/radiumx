@@ -1,0 +1,43 @@
+{
+    "name": "devuri/raydiumx",
+	  "version": "0.1.0",
+    "description": "Raydium is a WordPress micro-enhancement framework ",
+    "author": "uriel",
+    "homepage": "https://github.com/devuri/raydiumx/",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/devuri/raydiumx.git"
+    },
+    "bugs": {
+        "url": "https://github.com/devuri/raydiumx/issues"
+    },
+    "devDependencies": {
+        "cypress": "^13.2.0",
+        "dir-archiver": "^1.1.1",
+        "laravel-mix": "^6.0.43",
+        "resolve-url-loader": "^5.0.0",
+        "vitepress": "^1.0.1"
+    },
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "hot": "mix watch --hot",
+        "prod": "mix --production",
+        "production": "mix --production",
+        "bundle": "dir-archiver --src ./build/trunk --dest ./build.zip --exclude .git .wordpress-org .github .phpdoc .release-please-manifest.json _backup tools app.zip public vendor bug dev-notes cypress node_modules asset/src tests tmp report docs bin .vscode .idea .gitattributes cypress.config.js release-please-config.json .phpcs.xml.dist .php-cs-fixer.php stubs.php .gitignore README.md CHANGELOG.md package.json package-lock.json evp-logo.png .travis.yml phpcs.xml ISSUE_TEMPLATE.md CODE_OF_CONDUCT.md phpunit.xml .phpunit.result.cache phpdoc.xml psalm.xml rules.neon phpstan.neon webpack.mix.js",
+        "clean:dir": "rm -rf build/trunk",
+        "prebuild": "mix --production && npm run clean:dir",
+        "build": "mix --mix-config=build/webpack.mix.js --production",
+        "postbuild": "npm run bundle --silent",
+        "cypress": "node_modules/.bin/cypress open"
+    },
+    "dependencies": {
+        "@popperjs/core": "^2.11.8",
+        "bootstrap": "^5.3.3",
+        "jquery": "^3.6.0",
+        "just-validate": "^4.3.0",
+        "lity": "^2.4.1",
+        "plyr": "^3.7.8"
+    }
+}
