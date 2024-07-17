@@ -8,6 +8,7 @@
   "prerelease": false,
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": true,
+  "include-v-in-tag": false,
   "labels": {
     "feat": "minor",
     "bug": "patch",

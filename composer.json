@@ -8,17 +8,17 @@
     "require": {
         "devuri/wpframework": "^0.3",
         "johnpbloch/wordpress": "^6.5",
-        "symfony/error-handler": "^5.0",
-        "devuri/advanced-custom-site-status": "*",
-        "wpackagist-plugin/disable-comments": "*",
-        "wpackagist-plugin/disable-json-api": "*",
-        "wpackagist-plugin/email-log": "*",
-        "wpackagist-plugin/query-monitor": "*",
-        "wpackagist-plugin/stream": "*",
-        "wpackagist-plugin/sucuri-scanner": "*",
-        "wpackagist-plugin/wp-white-label-login": "*",
-        "wpackagist-theme/kadence": "*",
-        "wpackagist-theme/twentytwentyfour": "*"
+        "devuri/advanced-custom-site-status": "^0.2",
+        "devuri/wp-kadence-child": "^0.2",
+        "wpackagist-plugin/disable-comments": "^2.4",
+        "wpackagist-plugin/disable-json-api": "^1.8",
+        "wpackagist-plugin/email-log": "^2.4",
+        "wpackagist-plugin/query-monitor": "^3.16",
+        "wpackagist-plugin/stream": "^4.0",
+        "wpackagist-plugin/sucuri-scanner": "^1.9",
+        "wpackagist-plugin/wp-white-label-login": "^7.2",
+        "wpackagist-theme/kadence": "^1.2",
+        "wpackagist-theme/twentytwentyfour": "^1.1"
     },
     "repositories": [
         {
@@ -49,5 +49,12 @@
             "johnpbloch/wordpress-core-installer": true,
             "composer/installers": true
         }
+    },
+    "scripts": {
+        "build": [
+            "composer install",
+            "npm install",
+            "npm run build"
+        ]
     }
 }
