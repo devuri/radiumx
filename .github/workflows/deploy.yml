@@ -1,0 +1,85 @@
+name: 🔄 Release Pipeline
+on:
+  pull_request:
+    types:
+      - closed
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-${{ github.ref }}-${{ github.workflow }}
+      cancel-in-progress: true
+    steps:
+      - name: Run release-please
+        uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Outputs
+        run: echo ${{ steps.release.outputs.releases_created }}
+        shell: bash
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: https://dev.example.net
+    concurrency: staging
+    needs: release
+    if: ${{ needs.release.outputs.releases_created != 'true' }}
+    steps:
+      - name: 🛠️ Deploy to Staging 🟡
+        id: staging
+        uses: devuri/rdx-release-deployer-action@main
+        with:
+          site-url: ${{ secrets.SITE_URL_STAGING }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-path: ${{ secrets.DEPLOY_PATH_STAGING }}
+          deploy-host: ${{ secrets.DEPLOY_HOST_STAGING }}
+          deploy-port: ${{ secrets.DEPLOY_PORT_STAGING }}
+          deploy-user: ${{ secrets.DEPLOY_USER_STAGING }}
+          deploy-key: ${{ secrets.DEPLOY_KEY_STAGING }}
+          path: build/trunk/
+          tag-name: ${{ steps.release.outputs.tag_name }}
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          slack-channel: general
+          slack-title: "🟡 Staging Deployment 🛠️"
+          slack-message: "Deployment to staging completed. 🧪"
+          slack-username: "Deploy Bot"
+          slack-footer: "Staging Deployment Status"
+          use-cache: false
+          use-remote-install: true
+          node-version: '20'
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://prod.example.net
+    needs: release
+    concurrency: production
+    if: ${{ needs.release.outputs.releases_created == 'true' }}
+    steps:
+      - name: 🚀 Deploy to Production 🟢
+        uses: devuri/rdx-release-deployer-action@main
+        with:
+          site-url: ${{ secrets.SITE_URL_PRODUCTION }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-path: ${{ secrets.DEPLOY_PATH_PRODUCTION }}
+          deploy-host: ${{ secrets.DEPLOY_HOST_PRODUCTION }}
+          deploy-port: ${{ secrets.DEPLOY_PORT_PRODUCTION }}
+          deploy-user: ${{ secrets.DEPLOY_USER_PRODUCTION }}
+          deploy-key: ${{ secrets.DEPLOY_KEY_PRODUCTION }}
+          path: build/trunk/
+          tag-name: ${{ steps.release.outputs.tag_name }}
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          slack-channel: general
+          slack-title: "🟢 Production Deployment 🚀"
+          slack-message: "Deployment to production completed. 🎉"
+          slack-username: "Deploy Bot"
+          slack-footer: "Production Deployment Status"
+          use-cache: true
+          node-version: '20'
