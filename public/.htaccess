@@ -24,8 +24,28 @@ RewriteRule . /index.php [L]
 
 # END WordPress
 
-# custom error messages
-ErrorDocument 403 "No Access permission."
+# ErrorDocument directives.
+# ErrorDocument 400 "Bad Request."
+# ErrorDocument 401 "Unauthorized Access."
+# ErrorDocument 403 "No Access Permission."
+# ErrorDocument 404 "Page Not Found."
+# ErrorDocument 405 "Method Not Allowed."
+# ErrorDocument 408 "Request Timeout."
+# ErrorDocument 410 "Gone."
+# ErrorDocument 411 "Length Required."
+# ErrorDocument 412 "Precondition Failed."
+# ErrorDocument 413 "Payload Too Large."
+# ErrorDocument 414 "URI Too Long."
+# ErrorDocument 415 "Unsupported Media Type."
+# ErrorDocument 416 "Range Not Satisfiable."
+# ErrorDocument 417 "Expectation Failed."
+# ErrorDocument 426 "Upgrade Required."
+ErrorDocument 500 "Internal Server Error."
+ErrorDocument 501 "Not Implemented."
+ErrorDocument 502 "Bad Gateway."
+ErrorDocument 503 "Service Unavailable."
+ErrorDocument 504 "Gateway Timeout."
+ErrorDocument 505 "HTTP Version Not Supported."
 
 # Block WordPress xmlrpc.php
 <Files xmlrpc.php>
