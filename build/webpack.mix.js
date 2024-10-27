@@ -12,7 +12,6 @@ mix.copy('asset', 'build/trunk/public/asset/dist')
 
 mix.copy([
     'LICENSE',
-    'bootstrap.php',
     'composer.json',
     'composer.lock',
     'composer.lock',
